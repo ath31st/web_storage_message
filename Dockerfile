@@ -7,5 +7,5 @@ ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} storage-0.0.1-SNAPSHOT.jar
 
 
-EXPOSE 28852
+EXPOSE 28853
 ENTRYPOINT ["java","-jar","/storage-0.0.1-SNAPSHOT.jar"]
