@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.project.storage.entity.User;
 import ru.project.storage.repository.UserRepository;
@@ -14,7 +15,7 @@ import ru.project.storage.util.JWTUtil;
 import java.util.Collections;
 import java.util.Map;
 
-@Component
+@Service
 public class UserService{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
