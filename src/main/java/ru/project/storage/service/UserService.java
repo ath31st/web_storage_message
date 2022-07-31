@@ -52,7 +52,8 @@ public class UserService{
 
             return Collections.singletonMap("token", token);
         } catch (AuthenticationException authExc) {
-            throw new RuntimeException("Invalid Login Credentials");
+          //  throw new RuntimeException("Invalid Login Credentials");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Login Credentials");
         }
     }
 

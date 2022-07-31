@@ -10,9 +10,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.project.storage.exceptionhandler.RestAccessDeniedHandler;
+import ru.project.storage.exceptionhandler.RestAuthenticationEntryPoint;
 import ru.project.storage.repository.UserRepository;
 import ru.project.storage.service.UserDetailsServiceImpl;
-import ru.project.storage.service.UserService;
 import ru.project.storage.util.JWTFilter;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,14 +22,16 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserRepository userRepository;
     private final JWTFilter filter;
     private final UserDetailsServiceImpl userDetailsService;
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private final RestAccessDeniedHandler restAccessDeniedHandler;
 
-    public SecurityConfig(UserRepository userRepository, JWTFilter filter, UserDetailsServiceImpl userDetailsService) {
-        this.userRepository = userRepository;
+    public SecurityConfig(JWTFilter filter, UserDetailsServiceImpl userDetailsService, RestAuthenticationEntryPoint restAuthenticationEntryPoint, RestAccessDeniedHandler accessDeniedHandler) {
         this.filter = filter;
         this.userDetailsService = userDetailsService;
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+        this.restAccessDeniedHandler = accessDeniedHandler;
     }
 
     @Override

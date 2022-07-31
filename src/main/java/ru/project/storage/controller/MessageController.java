@@ -22,7 +22,7 @@ public class MessageController {
     @PostMapping("/new")
     public Map<String, Object> messageHandler(@RequestBody Message message, Principal principal) {
         if (message.getText().equals("history 10")) {
-            return Collections.singletonMap("10 last messages: ", messageService.getHistoryMessages(message.getName()));
+            return Collections.singletonMap("last messages: ", messageService.getHistoryMessages(message.getName()));
         }
         return messageService.saveNewMessage(message, principal);
     }
