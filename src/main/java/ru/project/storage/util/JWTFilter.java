@@ -32,7 +32,7 @@ public class JWTFilter extends OncePerRequestFilter {
         if(authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")){
             String jwt = authHeader.substring(7);
             if(jwt == null || jwt.isBlank()){
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }else {
                 try{
                     String name = jwtUtil.validateTokenAndRetrieveSubject(jwt);
@@ -44,11 +44,21 @@ public class JWTFilter extends OncePerRequestFilter {
                     }
 
                 }catch(JWTVerificationException exc){
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("{ ");
+                    sb.append("\"error\": \"Unauthorized\",");
+                    sb.append("\"message\": \"Invalid Token\",");
+                    sb.append("\"path\": \"")
+                            .append(request.getRequestURL())
+                            .append("\"");
+                    sb.append("} ");
+                    response.setContentType("application/json");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write(sb.toString());
+                    return;
                 }
             }
         }
-
         filterChain.doFilter(request, response);
     }
 }

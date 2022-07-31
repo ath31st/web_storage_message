@@ -12,9 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.project.storage.exceptionhandler.RestAuthenticationEntryPoint;
 import ru.project.storage.util.JWTFilter;
-
-import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -22,9 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfig {
 
     private final JWTFilter jwtRequestFilter;
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
-    public SecurityConfig(JWTFilter jwtRequestFilter) {
+    public SecurityConfig(JWTFilter jwtRequestFilter, RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
         this.jwtRequestFilter = jwtRequestFilter;
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
     }
 
     @Bean
@@ -39,10 +40,7 @@ public class SecurityConfig {
                 .antMatchers("/api/user/**").hasRole("USER")
                 .antMatchers("/api/message/**").hasRole("USER")
                 .and()
-                .exceptionHandling().authenticationEntryPoint(
-                        (request, response, authException) ->
-                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
-                )
+                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
