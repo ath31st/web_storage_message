@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.project.storage.repository.UserRepository;
 import ru.project.storage.service.UserDetailsServiceImpl;
+import ru.project.storage.service.UserService;
 import ru.project.storage.util.JWTFilter;
 
 import javax.servlet.http.HttpServletResponse;

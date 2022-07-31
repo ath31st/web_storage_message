@@ -8,21 +8,16 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class User {
-
+@Entity
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    private String name;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
-
+    @JsonProperty(namespace = "message")
+    private String text;
 }
