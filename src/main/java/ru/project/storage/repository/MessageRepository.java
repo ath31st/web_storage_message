@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    List<Message> findByUser_Name(String name);
+    List<Message> findByUser_NameOrderByIdDesc(String name);
+
 
 }

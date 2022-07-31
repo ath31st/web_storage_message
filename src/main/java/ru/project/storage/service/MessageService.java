@@ -27,7 +27,7 @@ public class MessageService {
     }
 
     public List<Message> getHistoryMessages(String name) {
-        return messageRepository.findByUser_Name(name)
+        return messageRepository.findByUser_NameOrderByIdDesc(name)
                .stream()
                .limit(10)
                .toList();
