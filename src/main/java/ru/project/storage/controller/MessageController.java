@@ -24,6 +24,6 @@ public class MessageController {
         if (message.getText().equals("history 10")) {
             return Collections.singletonMap("last messages: ", messageService.getHistoryMessages(message.getName()));
         }
-        return messageService.saveNewMessage(message, principal);
+        return messageService.saveNewMessage(message, principal.getName());
     }
 }

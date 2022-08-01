@@ -57,7 +57,7 @@ public class UserService{
         }
     }
 
-    public void checkExistingUser(User user) {
+    private void checkExistingUser(User user) {
         if (userRepository.findByName(user.getName()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"User with name: " + user.getName() + " already exists!");
         }

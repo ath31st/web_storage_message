@@ -5,7 +5,6 @@ import ru.project.storage.entity.Message;
 import ru.project.storage.repository.MessageRepository;
 import ru.project.storage.repository.UserRepository;
 
-import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +19,8 @@ public class MessageService {
         this.userRepository = userRepository;
     }
 
-    public Map<String, Object> saveNewMessage(Message message, Principal principal) {
-        message.setUser(userRepository.findByName(principal.getName()).get());
+    public Map<String, Object> saveNewMessage(Message message, String name) {
+        message.setUser(userRepository.findByName(name).get());
         messageRepository.save(message);
         return Collections.singletonMap("message", message.getText());
     }
